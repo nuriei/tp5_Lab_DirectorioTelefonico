@@ -39,6 +39,6 @@ public class NewMain {
         System.out.println("Contacto borrado. ¿Existe?: " + directorio.buscarContacto(266400000));
     }
     
-    }
+    
     
 }

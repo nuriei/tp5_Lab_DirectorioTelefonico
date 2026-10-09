@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import entidades.DirectorioTelefonico;
 import java.util.TreeSet;
 
 /**
@@ -12,7 +13,7 @@ import java.util.TreeSet;
  * @author Nuri
  */
 public class VistaPrincipal extends javax.swing.JFrame {
-    public static Directorio directorioGlobal = new Directorio();
+    public static DirectorioTelefonico directorio = new DirectorioTelefonico();
     public static TreeSet<String> listaCiudades = new TreeSet<>();
     /**
      * Creates new form VistaPrincipal
@@ -37,7 +38,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         mClientes = new javax.swing.JMenu();
         miAgregarcliente = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuBorrarCliente = new javax.swing.JMenuItem();
         miBuscarCliente = new javax.swing.JMenuItem();
         mDirectorio = new javax.swing.JMenu();
         jMenuBuscarclientePorCiudad = new javax.swing.JMenuItem();
@@ -76,13 +77,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
         mClientes.add(miAgregarcliente);
 
-        jMenuItem1.setText("Borrar Cliente");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBorrarCliente.setText("Borrar Cliente");
+        jMenuBorrarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuBorrarClienteActionPerformed(evt);
             }
         });
-        mClientes.add(jMenuItem1);
+        mClientes.add(jMenuBorrarCliente);
 
         miBuscarCliente.setText("Buscar Cliente");
         miBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -199,7 +200,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jDesktopPane1.moveToFront(vista);
     }//GEN-LAST:event_miAgregarclienteActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuBorrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuBorrarClienteActionPerformed
         // TODO add your handling code here:
         jDesktopPane1.removeAll();
         jDesktopPane1.repaint();
@@ -207,7 +208,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         vista.setVisible(true);
         jDesktopPane1.add(vista);
         jDesktopPane1.moveToFront(vista);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenuBorrarClienteActionPerformed
 
     private void miBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miBuscarClienteActionPerformed
         // TODO add your handling code here:
@@ -278,9 +279,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuBorrarCliente;
     private javax.swing.JMenuItem jMenuBuscarTelefonoPorApellido;
     private javax.swing.JMenuItem jMenuBuscarclientePorCiudad;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu mCiudades;
     private javax.swing.JMenu mClientes;
     private javax.swing.JMenu mDirectorio;

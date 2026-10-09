@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import entidades.Contacto;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,6 +19,7 @@ public class VistaAgregarCliente extends javax.swing.JInternalFrame {
      */
     public VistaAgregarCliente() {
         initComponents();
+        llenarComboCiudad();
     }
 
     /**
@@ -43,8 +45,8 @@ public class VistaAgregarCliente extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         txtTelefono = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jBGuardar = new javax.swing.JButton();
+        jBCerrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -64,13 +66,6 @@ public class VistaAgregarCliente extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setText("Domicilio:");
 
-        txtDNI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDNIActionPerformed(evt);
-            }
-        });
-
-        cbCiudades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "San Luis", "La Punta", "Villa Mercedes", "Merlo" }));
         cbCiudades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbCiudadesActionPerformed(evt);
@@ -164,14 +159,19 @@ public class VistaAgregarCliente extends javax.swing.JInternalFrame {
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBGuardar.setText("Guardar");
+        jBGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBGuardarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Salir");
+        jBCerrar.setText("Salir");
+        jBCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCerrarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Agregar Cliente");
@@ -184,9 +184,9 @@ public class VistaAgregarCliente extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(120, 120, 120)
-                        .addComponent(jButton1)
+                        .addComponent(jBGuardar)
                         .addGap(115, 115, 115)
-                        .addComponent(jButton2))
+                        .addComponent(jBCerrar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(167, 167, 167)
                         .addComponent(jLabel1))
@@ -208,8 +208,8 @@ public class VistaAgregarCliente extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jBGuardar)
+                    .addComponent(jBCerrar))
                 .addContainerGap())
         );
 
@@ -224,19 +224,58 @@ public class VistaAgregarCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
     // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        try {
+            //aca me fijo que no quede ningun campo vacio
+            if (txtDNI.getText().isEmpty() || txtNombre.getText().isEmpty()
+                    || txtApellido.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe completar todos los campos.");
+                return;
+            }
+            String nombre = txtNombre.getText().trim();
+            String apellido = txtApellido.getText().trim();
 
-    private void txtDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDNIActionPerformed
+            // 2. Validar que nombre y apellido solo contengan letras
+            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar sólo letras en el Nombre.");
+                return;
+            }
+
+            if (!apellido.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar sólo letras en el Apellido.");
+                return;
+            }
+            //aca convierto todos los campos a texto si son letras en los numeros salta el catch
+            int dni = Integer.parseInt(txtDNI.getText().trim());
+            Integer telefono = Integer.parseInt(txtTelefono.getText().trim());
+            String ciudad = cbCiudades.getSelectedItem().toString();
+            String domicilio = txtDomicilio.getText().trim();
+
+            // Crear el contacto e insertar en el directorio
+            Contacto nuevoContacto = new Contacto(dni, nombre, apellido, ciudad, domicilio);
+            VistaPrincipal.directorio.agregarContacto(telefono, nuevoContacto);
+
+            JOptionPane.showMessageDialog(this, "se agrego correctamente");
+            limpiarCampos();
+
+        } catch (NumberFormatException e) {//aca q no pongan letras en los campos dni y telefono
+            JOptionPane.showMessageDialog(this, "debe ser un numero el campo dni y telefono");
+        }
+
+
+    }//GEN-LAST:event_jBGuardarActionPerformed
+
+    private void jBCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCerrarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDNIActionPerformed
+        dispose();
+    }//GEN-LAST:event_jBCerrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbCiudades;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jBCerrar;
+    private javax.swing.JButton jBGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -252,4 +291,17 @@ public class VistaAgregarCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+private void llenarComboCiudad() {
+        cbCiudades.removeAllItems();
+        for (String ciudad : VistaPrincipal.listaCiudades) {
+            cbCiudades.addItem(ciudad);
+        }
+    }
+private void limpiarCampos() {
+        txtDNI.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtDomicilio.setText("");
+        txtTelefono.setText("");
+    }
 }
