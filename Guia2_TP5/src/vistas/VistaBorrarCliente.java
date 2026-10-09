@@ -5,19 +5,41 @@
  */
 package vistas;
 
+import entidades.Contacto;
+import java.util.HashSet;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Nuri
  */
 public class VistaBorrarCliente extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form VistaBorrarCliente
-     */
+    private DefaultListModel<Integer> tablaListada = new DefaultListModel<>();
+    private DefaultTableModel formatoTabla;
+    
     public VistaBorrarCliente() {
         initComponents();
+        llenarListaDNI();
+        
     }
+    private void llenarListaDNI() {
+        DefaultListModel modeloLista = new DefaultListModel();
+        HashSet<Integer> dniSinRepetir = new HashSet<>();
 
+        for (Contacto c : VistaPrincipal.directorio.getDirectorio().values()) {
+            if (c != null) {
+                dniSinRepetir.add(c.getDni());
+            }
+        }
+
+        for (Integer dni : dniSinRepetir) {
+            modeloLista.addElement(dni);
+        }
+
+        lBorrar.setModel(modeloLista);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,18 +51,19 @@ public class VistaBorrarCliente extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tBorrar = new javax.swing.JTable();
+        jListTelefono = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtBCDNI = new javax.swing.JTextField();
+        txtBDNI = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         lBorrar = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        jBBorrar = new javax.swing.JButton();
+        jBSalir = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Borrar Cliente");
 
-        tBorrar.setModel(new javax.swing.table.DefaultTableModel(
+        jListTelefono.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -48,7 +71,7 @@ public class VistaBorrarCliente extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "DNI", "Apellido", "Nombre", "Direccion", "Ciudad", "Telefono"
+                "telefono", "Apellido", "Nombre", "Direccion", "Ciudad", "dni"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -59,15 +82,40 @@ public class VistaBorrarCliente extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tBorrar);
+        jScrollPane1.setViewportView(jListTelefono);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("DNI:");
 
+        txtBDNI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBDNIActionPerformed(evt);
+            }
+        });
+
+        lBorrar.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lBorrarValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(lBorrar);
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("Borrar");
+        jBBorrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jBBorrar.setText("Borrar");
+        jBBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBorrarActionPerformed(evt);
+            }
+        });
+
+        jBSalir.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jBSalir.setForeground(new java.awt.Color(204, 0, 51));
+        jBSalir.setText("Salir");
+        jBSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,12 +135,14 @@ public class VistaBorrarCliente extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                            .addComponent(txtBCDNI))
+                            .addComponent(txtBDNI))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(jBBorrar)
+                        .addGap(105, 105, 105)
+                        .addComponent(jBSalir)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -107,27 +157,116 @@ public class VistaBorrarCliente extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(txtBCDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtBDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(35, 35, 35))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBBorrar)
+                    .addComponent(jBSalir))
+                .addGap(37, 37, 37))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void cargarTablaPorDNI(int dniBuscado) {
+        DefaultTableModel model = (DefaultTableModel) jListTelefono.getModel();
+        model.setRowCount(0); // Limpia la tabla
+
+        boolean encontrado = false;
+
+        for (Integer tel : VistaPrincipal.directorio.getDirectorio().keySet()) {
+            Contacto c = VistaPrincipal.directorio.buscarContacto(tel);
+            if (c != null && c.getDni() == dniBuscado) {
+                // Teléfono en la columna 0, DNI en la columna 5
+                model.addRow(new Object[]{
+                    tel,
+                    c.getApellido(),
+                    c.getNombre(),
+                    c.getDireccion(),
+                    c.getCiudad(),
+                    c.getDni()
+                });
+                encontrado = true;
+            }
+        }
+
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(this, "No se encontraron contactos para el DNI ingresado.");
+            txtBDNI.setText("");
+        }
+    }
+    private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jBSalirActionPerformed
+
+    private void lBorrarValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lBorrarValueChanged
+      
+    }//GEN-LAST:event_lBorrarValueChanged
+
+    private void txtBDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBDNIActionPerformed
+       
+    String texto = txtBDNI.getText().trim();
+
+    if (!texto.isEmpty()) {
+        try {
+            
+            int dniBuscado = Integer.parseInt(texto);
+            
+            cargarTablaPorDNI(dniBuscado);
+            
+            
+            lBorrar.setSelectedValue(texto, true);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI válido (solo números).", "Atención", JOptionPane.WARNING_MESSAGE);
+            txtBDNI.setText("");
+        }
+    }
+    }//GEN-LAST:event_txtBDNIActionPerformed
+
+    private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
+        int filaSeleccionada = jListTelefono.getSelectedRow();
+
+    if (filaSeleccionada != -1) {
+        
+        Integer telABorrar = (Integer) jListTelefono.getValueAt(filaSeleccionada, 0);
+
+        VistaPrincipal.directorio.borrarContacto(telABorrar);
+
+        JOptionPane.showMessageDialog(this, "Se borró el teléfono seleccionado de la tabla.");
+
+        txtBDNI.setText("");
+
+        DefaultTableModel model = (DefaultTableModel) jListTelefono.getModel();
+        model.setRowCount(0);
+
+        llenarListaDNI();
+
+    } else {
+        JOptionPane.showMessageDialog(this, 
+            "Pasos para borrar:\n" +
+            "1. Busque el usuario por DNI en la lista o en el cuadro de texto.\n" +
+            "2. Haga clic en la fila de la tabla correspondiente al teléfono que desea eliminar.\n" +
+            "3. Presione el botón Borrar.",
+            "Instrucciones para borrar", 
+            JOptionPane.INFORMATION_MESSAGE);
+    }
+    }//GEN-LAST:event_jBBorrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBBorrar;
+    private javax.swing.JButton jBSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JTable jListTelefono;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> lBorrar;
-    private javax.swing.JTable tBorrar;
-    private javax.swing.JTextField txtBCDNI;
+    private javax.swing.JTextField txtBDNI;
     // End of variables declaration//GEN-END:variables
+    
 }

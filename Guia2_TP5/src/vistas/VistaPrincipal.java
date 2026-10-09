@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import entidades.Contacto;
 import entidades.DirectorioTelefonico;
 import java.util.TreeSet;
 
@@ -23,6 +24,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
         listaCiudades.add("San Luis");
         listaCiudades.add("Villa Mercedes");
         listaCiudades.add("Merlo");
+        directorio.agregarContacto(266474851, new Contacto(33089694, "carlos", "solis", "San Luis", "Av. Lafinur 123"));
+        directorio.agregarContacto(266474852, new Contacto(33089694, "carlos", "solis", "San Luis", "Av. Lafinur 123"));
+        directorio.agregarContacto(266574851, new Contacto(48579650, "sandra", "funez", "Villa Mercedes", "Mitre 456"));
     }
 
     /**

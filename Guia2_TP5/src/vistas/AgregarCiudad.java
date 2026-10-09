@@ -41,6 +41,7 @@ public class AgregarCiudad extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Nombre Ciudad:");
 
+        bGuardarCiudad.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         bGuardarCiudad.setText("Guardar");
         bGuardarCiudad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -48,6 +49,8 @@ public class AgregarCiudad extends javax.swing.JInternalFrame {
             }
         });
 
+        bSalir.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        bSalir.setForeground(new java.awt.Color(204, 0, 0));
         bSalir.setText("Salir");
         bSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
