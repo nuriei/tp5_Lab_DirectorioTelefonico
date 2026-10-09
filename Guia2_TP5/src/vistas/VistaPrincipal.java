@@ -40,8 +40,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         miBuscarCliente = new javax.swing.JMenuItem();
         mDirectorio = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuBuscarclientePorCiudad = new javax.swing.JMenuItem();
+        jMenuBuscarTelefonoPorApellido = new javax.swing.JMenuItem();
         mCiudades = new javax.swing.JMenu();
         miAgregarCiudad = new javax.swing.JMenuItem();
         mSalir = new javax.swing.JMenu();
@@ -54,33 +54,63 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 713, Short.MAX_VALUE)
+            .addGap(0, 1026, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 495, Short.MAX_VALUE)
+            .addGap(0, 581, Short.MAX_VALUE)
         );
 
         mClientes.setText("Clientes");
+        mClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mClientesActionPerformed(evt);
+            }
+        });
 
         miAgregarcliente.setText("Agregar Cliente");
+        miAgregarcliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAgregarclienteActionPerformed(evt);
+            }
+        });
         mClientes.add(miAgregarcliente);
 
         jMenuItem1.setText("Borrar Cliente");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         mClientes.add(jMenuItem1);
 
         miBuscarCliente.setText("Buscar Cliente");
+        miBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miBuscarClienteActionPerformed(evt);
+            }
+        });
         mClientes.add(miBuscarCliente);
 
         jMenuBar1.add(mClientes);
 
         mDirectorio.setText("Directorio");
 
-        jMenuItem2.setText("Buscar Cliente por Ciudad");
-        mDirectorio.add(jMenuItem2);
+        jMenuBuscarclientePorCiudad.setText("Buscar Cliente por Ciudad");
+        jMenuBuscarclientePorCiudad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuBuscarclientePorCiudadActionPerformed(evt);
+            }
+        });
+        mDirectorio.add(jMenuBuscarclientePorCiudad);
 
-        jMenuItem3.setText("Buscar Telefono por Apellido");
-        mDirectorio.add(jMenuItem3);
+        jMenuBuscarTelefonoPorApellido.setText("Buscar Telefono por Apellido");
+        jMenuBuscarTelefonoPorApellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuBuscarTelefonoPorApellidoActionPerformed(evt);
+            }
+        });
+        mDirectorio.add(jMenuBuscarTelefonoPorApellido);
 
         jMenuBar1.add(mDirectorio);
 
@@ -120,11 +150,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -150,6 +184,61 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void mSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mSalirMouseClicked
        System.exit(0);  // TODO add your handling code here:
     }//GEN-LAST:event_mSalirMouseClicked
+
+    private void mClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mClientesActionPerformed
+
+    private void miAgregarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAgregarclienteActionPerformed
+        // TODO add your handling code here
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+        VistaAgregarCliente vista = new VistaAgregarCliente();
+        vista.setVisible(true);
+        jDesktopPane1.add(vista);
+        jDesktopPane1.moveToFront(vista);
+    }//GEN-LAST:event_miAgregarclienteActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+        VistaBorrarCliente vista = new VistaBorrarCliente();
+        vista.setVisible(true);
+        jDesktopPane1.add(vista);
+        jDesktopPane1.moveToFront(vista);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void miBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miBuscarClienteActionPerformed
+        // TODO add your handling code here:
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+        VistaBuscarCliente vista = new VistaBuscarCliente();
+        vista.setVisible(true);
+        jDesktopPane1.add(vista);
+        jDesktopPane1.moveToFront(vista);
+                                         
+    }//GEN-LAST:event_miBuscarClienteActionPerformed
+
+    private void jMenuBuscarclientePorCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuBuscarclientePorCiudadActionPerformed
+        // TODO add your handling code here:
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+        VistaDirectorioBuscarCiudad vista = new VistaDirectorioBuscarCiudad();
+        vista.setVisible(true);
+        jDesktopPane1.add(vista);
+        jDesktopPane1.moveToFront(vista);
+    }//GEN-LAST:event_jMenuBuscarclientePorCiudadActionPerformed
+
+    private void jMenuBuscarTelefonoPorApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuBuscarTelefonoPorApellidoActionPerformed
+        // TODO add your handling code here
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+        VistaBuscarPorApellido vista = new VistaBuscarPorApellido();
+        vista.setVisible(true);
+        jDesktopPane1.add(vista);
+        jDesktopPane1.moveToFront(vista);
+    }//GEN-LAST:event_jMenuBuscarTelefonoPorApellidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,9 +278,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuBuscarTelefonoPorApellido;
+    private javax.swing.JMenuItem jMenuBuscarclientePorCiudad;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenu mCiudades;
     private javax.swing.JMenu mClientes;
     private javax.swing.JMenu mDirectorio;
